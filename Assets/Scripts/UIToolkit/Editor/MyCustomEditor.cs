@@ -26,6 +26,20 @@ public class MyCustomEditor : EditorWindow
         VisualElement label = new Label("Hello World! From C#");
         root.Add(label);
 
+        Button button = new Button
+        {
+            name = "button3",
+            text = "This is button3."
+        };
+        root.Add(button);
+
+        Toggle toggle = new Toggle
+        {
+            name = "toggle3",
+            label = "Number?"
+        };
+        root.Add(toggle);
+
         // Instantiate UXML
         root.Add(m_VisualTreeAsset.Instantiate());
         root.Add(m_UXMLTree.Instantiate());
