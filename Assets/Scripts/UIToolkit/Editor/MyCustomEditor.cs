@@ -7,6 +7,9 @@ public class MyCustomEditor : EditorWindow
     [SerializeField]
     private VisualTreeAsset m_VisualTreeAsset = default;
 
+    [SerializeField]
+    private VisualTreeAsset m_UXMLTree;
+
     [MenuItem("Window/UI Toolkit/MyCustomEditor")]
     public static void ShowExample()
     {
@@ -24,7 +27,7 @@ public class MyCustomEditor : EditorWindow
         root.Add(label);
 
         // Instantiate UXML
-        VisualElement labelFromUXML = m_VisualTreeAsset.Instantiate();
-        root.Add(labelFromUXML);
+        root.Add(m_VisualTreeAsset.Instantiate());
+        root.Add(m_UXMLTree.Instantiate());
     }
 }
