@@ -10,6 +10,10 @@ public class MyCustomEditor : EditorWindow
     [SerializeField]
     private VisualTreeAsset m_UXMLTree;
 
+    private int m_ClickCount;
+    
+    private const string m_ButtonPrefix = "button";
+    
     [MenuItem("Window/UI Toolkit/MyCustomEditor")]
     public static void ShowExample()
     {
@@ -43,5 +47,30 @@ public class MyCustomEditor : EditorWindow
         // Instantiate UXML
         root.Add(m_VisualTreeAsset.Instantiate());
         root.Add(m_UXMLTree.Instantiate());
+        
+        SetupButtonHandler();
+    }
+
+    private void SetupButtonHandler()
+    {
+        var buttons = rootVisualElement.Query<Button>();
+        buttons.ForEach(RegisterHandler);
+    }
+
+    private void RegisterHandler(Button button)
+    {
+        button.RegisterCallback<ClickEvent>(PrintClickMessage);
+    }
+    
+    private void PrintClickMessage(ClickEvent evt)
+    {
+        ++m_ClickCount;
+
+        Button button = evt.currentTarget as Button;
+        string buttonNumber = button.name[m_ButtonPrefix.Length..];
+        string toggleName = "toggle" + buttonNumber;
+        Toggle toggle = rootVisualElement.Query<Toggle>(toggleName);
+
+        Debug.Log("Button was clicked!" + (toggle.value ? "Count: " + m_ClickCount : ""));
     }
 }
